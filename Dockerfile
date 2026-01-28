@@ -10,12 +10,12 @@ COPY pom.xml /home/app
 #Personal access tokens are intended to access GitHub resources on behalf of yourself.
 RUN echo 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 > /home/app/key.json
 
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn -f /home/app/pom.xml clean package -DskipTests
 
 #
 # Package stage
 #
-FROM openjdk:11-jre-slim
+FROM adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
 COPY --from=build /home/app/target/swagger-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 
 EXPOSE 8080
